@@ -452,6 +452,24 @@
     opacity: 0.5;
   }
 
+  a.coming-node {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    opacity: 1;
+    transition: border-color 0.2s;
+  }
+
+  a.coming-node:hover { border-color: var(--border-mid); }
+
+  .coming-desc {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin-top: 6px;
+    max-width: 280px;
+  }
+
   .coming-label {
     font-family: var(--font-mono);
     font-size: 9px;
@@ -880,10 +898,11 @@
     </div>
 
     <div class="coming-row">
-      <div class="coming-node">
-        <div class="coming-label">Future venture</div>
-        <div class="coming-name">Unnamed</div>
-      </div>
+      <a class="coming-node" href="/listen/">
+        <div class="coming-label">Venture · In development</div>
+        <div class="coming-name">Listen</div>
+        <p class="coming-desc">A place to talk, vent or think out loud — without being dismissed, lectured, or handed a script.</p>
+      </a>
       <div class="coming-node">
         <div class="coming-label">Future venture</div>
         <div class="coming-name">Unnamed</div>

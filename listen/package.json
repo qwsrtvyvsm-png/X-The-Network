@@ -1,0 +1,16 @@
+{
+  "name": "listen",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A space to talk, vent, or think out loud with something that isn't in a hurry to fix you, dismiss you, or hand you a hotline number the moment things get heavy.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
