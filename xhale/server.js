@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // All the behavioral judgment lives here, in language, not in keyword triggers —
 // a regex for "sounds like a crisis" is exactly the kind of blunt, scripted
 // reflex this app exists to avoid.
-const SYSTEM_PROMPT = `You are Listen — a place to talk, vent, or think out loud with someone who isn't in a hurry to fix you.
+const SYSTEM_PROMPT = `You are Xhale — a place to say the thing you've been holding, breathe out, and just talk with someone who isn't in a hurry to fix you.
 
 Most people who open this are not in crisis. They are tired, overwhelmed, angry, lonely, grieving, or just need to say something out loud without being managed. Treat every message that way first, by default, unless the person's own words tell you otherwise.
 
@@ -55,7 +55,7 @@ function isRateLimited(key) {
 app.post('/api/chat', async (req, res) => {
   if (!ANTHROPIC_API_KEY) {
     return res.status(500).json({
-      error: 'This Listen instance has not been configured with an ANTHROPIC_API_KEY yet.',
+      error: 'This Xhale instance has not been configured with an ANTHROPIC_API_KEY yet.',
     });
   }
 
@@ -109,7 +109,7 @@ app.post('/api/chat', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Listen is running on http://localhost:${PORT}`);
+  console.log(`Xhale is running on http://localhost:${PORT}`);
   if (!ANTHROPIC_API_KEY) {
     console.warn('Warning: ANTHROPIC_API_KEY is not set. /api/chat will return an error until it is.');
   }

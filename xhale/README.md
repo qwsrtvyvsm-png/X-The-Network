@@ -1,6 +1,6 @@
-# Listen
+# Xhale
 
-A place to talk, vent, or think out loud with something that isn't in a hurry to fix you.
+A place to say the thing you've been holding, breathe out, and just talk with something that isn't in a hurry to fix you.
 
 ## Why this exists
 
@@ -14,7 +14,7 @@ processed.
 
 The root cause isn't "the model needs a safety feature." It's that safety and
 warmth get implemented as two separate systems bolted together — a scripted
-crisis layer sitting in front of an otherwise generic assistant. Listen's
+crisis layer sitting in front of an otherwise generic assistant. Xhale's
 architecture is a deliberate bet against that pattern: there is exactly one
 behavioral system — the prompt in `server.js` — and it carries both the
 instruction to actually listen and the instruction for when to step in for
@@ -22,6 +22,12 @@ real safety reasons. There's no separate keyword filter deciding when to
 override the persona with a script, because that filter is what produces the
 dismissiveness this app exists to avoid. The model is trusted to use judgment,
 the same way a person would.
+
+The look follows the same logic. The rest of the X network runs cold,
+industrial dark-and-lime branding, which reads right for a venture holding
+company but wrong for something people open when they're not doing well. Xhale
+uses its own warmer palette and a softer display face instead of inheriting
+the parent brand wholesale.
 
 ## What it is / isn't
 
@@ -39,7 +45,7 @@ the same way a person would.
 ## Running it
 
 ```bash
-cd listen
+cd xhale
 npm install
 cp .env.example .env   # then add your ANTHROPIC_API_KEY
 npm start
