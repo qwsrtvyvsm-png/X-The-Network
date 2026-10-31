@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Xhale — X</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500;1,600&family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+
+  :root {
+    --paper:        #FBF6EE;
+    --paper-raised:  #FFFFFF;
+    --line:         #E6D9C4;
+    --ink:          #2B2118;
+    --ink-muted:    #8F8070;
+    --ink-faint:    #C9BCA6;
+    --coral:        #E0654A;
+    --coral-dim:    #F5DFD6;
+    --sage:         #74845F;
+    --sage-dim:     #E3E7D9;
+    --on-coral:     #FFFFFF;
+
+    --font-display: 'Fraunces', 'Georgia', serif;
+    --font-body:    'Newsreader', Georgia, 'Times New Roman', serif;
+    --font-ui:      'IBM Plex Sans', system-ui, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:        #1E1811;
+      --paper-raised: #251E15;
+      --line:         #3B3122;
+      --ink:          #F2E9D8;
+      --ink-muted:    #A6987F;
+      --ink-faint:    #4A4030;
+      --coral:        #F0916F;
+      --coral-dim:    #3A2A1E;
+      --sage:         #A6B98F;
+      --sage-dim:     #2E3325;
+      --on-coral:     #1E1811;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper:        #1E1811;
+    --paper-raised: #251E15;
+    --line:         #3B3122;
+    --ink:          #F2E9D8;
+    --ink-muted:    #A6987F;
+    --ink-faint:    #4A4030;
+    --coral:        #F0916F;
+    --coral-dim:    #3A2A1E;
+    --sage:         #A6B98F;
+    --sage-dim:     #2E3325;
+    --on-coral:     #1E1811;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Soft drifting shapes — the "organic" layer, purely decorative */
+  .glow {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(60px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.35;
+  }
+
+  .glow-1 {
+    width: 46vw;
+    height: 46vw;
+    background: var(--coral);
+    top: -14vw;
+    right: -10vw;
+    animation: drift-a 26s ease-in-out infinite alternate;
+  }
+
+  .glow-2 {
+    width: 38vw;
+    height: 38vw;
+    background: var(--sage);
+    bottom: -12vw;
+    left: -8vw;
+    animation: drift-b 32s ease-in-out infinite alternate;
+  }
+
+  @keyframes drift-a {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(-3vw, 4vw) scale(1.08); }
+  }
+
+  @keyframes drift-b {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(4vw, -3vw) scale(1.05); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glow-1, .glow-2 { animation: none; }
+  }
+
+  header, .intro, main, .composer {
+    position: relative;
+    z-index: 1;
+  }
+
+  header {
+    flex-shrink: 0;
+    padding: 18px clamp(20px, 5vw, 56px) 10px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .brand-x {
+    font-family: var(--font-ui);
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+  }
+
+  .brand-name {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 25px;
+    color: var(--coral);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    border: none;
+    color: var(--ink-muted);
+    font-family: var(--font-ui);
+    font-size: 12.5px;
+    cursor: pointer;
+    padding: 6px 2px;
+    text-decoration: underline;
+    text-decoration-color: var(--ink-faint);
+    text-underline-offset: 3px;
+    transition: color 0.15s;
+  }
+
+  .btn-ghost:hover { color: var(--coral); }
+
+  .intro {
+    flex-shrink: 0;
+    padding: 0 clamp(20px, 5vw, 56px) 16px;
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-muted);
+    max-width: 640px;
+  }
+
+  main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px clamp(20px, 5vw, 56px) 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    max-width: 720px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .entry { max-width: 100%; }
+
+  .entry-who {
+    font-family: var(--font-ui);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .entry-user { text-align: right; }
+  .entry-user .entry-who { color: var(--coral); }
+  .entry-user .entry-text { color: var(--ink); }
+
+  .entry-assistant { text-align: left; }
+  .entry-assistant .entry-who { color: var(--sage); }
+  .entry-assistant .entry-text { color: var(--ink); }
+
+  .entry-text {
+    font-size: 17px;
+    line-height: 1.75;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  .entry-system {
+    text-align: center;
+  }
+
+  .entry-system .entry-text {
+    display: inline-block;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-style: normal;
+    color: var(--ink-muted);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 6px 0;
+  }
+
+  .breathing {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--sage);
+    animation: breathe 2.4s ease-in-out infinite;
+  }
+
+  @keyframes breathe {
+    0%, 100% { transform: scale(0.6); opacity: 0.5; }
+    50%      { transform: scale(1); opacity: 1; }
+  }
+
+  .composer {
+    flex-shrink: 0;
+    padding: 14px clamp(20px, 5vw, 56px) calc(20px + env(safe-area-inset-bottom));
+    max-width: 720px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .composer-inner {
+    display: flex;
+    align-items: flex-end;
+    gap: 14px;
+    border-bottom: 1.5px solid var(--ink-faint);
+    padding-bottom: 6px;
+    transition: border-color 0.15s;
+  }
+
+  .composer-inner:focus-within { border-color: var(--coral); }
+
+  #input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.6;
+    padding: 8px 0;
+    outline: none;
+    resize: none;
+    max-height: 200px;
+    min-height: 30px;
+  }
+
+  #input::placeholder { color: var(--ink-faint); }
+
+  #send {
+    flex-shrink: 0;
+    background: var(--coral);
+    color: var(--on-coral);
+    font-family: var(--font-ui);
+    font-weight: 500;
+    font-size: 13.5px;
+    border: none;
+    border-radius: 999px;
+    padding: 10px 22px;
+    margin-bottom: 4px;
+    cursor: pointer;
+    transition: transform 0.1s, opacity 0.15s;
+  }
+
+  #send:hover:not(:disabled) { transform: scale(1.04); }
+  #send:active:not(:disabled) { transform: scale(0.95); }
+  #send:disabled { opacity: 0.4; cursor: default; }
+
+  :focus-visible { outline: 2px solid var(--coral); outline-offset: 2px; }
+</style>
+</head>
+<body>
+
+<div class="glow glow-1" aria-hidden="true"></div>
+<div class="glow glow-2" aria-hidden="true"></div>
+
+<header>
+  <a class="brand" href="/">
+    <span class="brand-x">X /</span>
+    <span class="brand-name">Xhale</span>
+  </a>
+  <button class="btn-ghost" id="clearBtn" type="button">Start over</button>
+</header>
+
+<div class="intro">
+  Say what's actually going on. This isn't therapy, and it won't perform concern at you —
+  if you want real help fast, just ask and it'll get you there.
+</div>
+
+<main id="messages" aria-live="polite"></main>
+
+<form class="composer" id="composer">
+  <div class="composer-inner">
+    <textarea id="input" placeholder="Let it out…" rows="1" autofocus></textarea>
+    <button id="send" type="submit">Send</button>
+  </div>
+</form>
+
+<script>
+  const STORAGE_KEY = 'xhale_chat_history_v1';
+  const messagesEl = document.getElementById('messages');
+  const form = document.getElementById('composer');
+  const input = document.getElementById('input');
+  const sendBtn = document.getElementById('send');
+  const clearBtn = document.getElementById('clearBtn');
+  const WHO_LABEL = { user: 'You', assistant: 'Xhale', system: '' };
+
+  let history = loadHistory();
+  render();
+
+  function loadHistory() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function saveHistory() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+    } catch {
+      // storage unavailable (private browsing, quota) — conversation just won't persist
+    }
+  }
+
+  function render() {
+    messagesEl.innerHTML = '';
+    for (const msg of history) {
+      messagesEl.appendChild(renderEntry(msg));
+    }
+    scrollToBottom();
+  }
+
+  function renderEntry(msg) {
+    const row = document.createElement('div');
+    row.className = 'entry entry-' + msg.role;
+
+    if (msg.role !== 'system') {
+      const who = document.createElement('div');
+      who.className = 'entry-who';
+      who.textContent = WHO_LABEL[msg.role] || '';
+      row.appendChild(who);
+    }
+
+    const text = document.createElement('div');
+    text.className = 'entry-text';
+    text.textContent = msg.content;
+    row.appendChild(text);
+
+    return row;
+  }
+
+  function scrollToBottom() {
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function autoResize() {
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 200) + 'px';
+  }
+
+  input.addEventListener('input', autoResize);
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      form.requestSubmit();
+    }
+  });
+
+  clearBtn.addEventListener('click', () => {
+    if (history.length === 0) return;
+    if (!confirm('Start over? This clears what you’ve said so far on this device.')) return;
+    history = [];
+    saveHistory();
+    render();
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const text = input.value.trim();
+    if (!text) return;
+
+    history.push({ role: 'user', content: text });
+    saveHistory();
+    render();
+
+    input.value = '';
+    autoResize();
+    setBusy(true);
+
+    const typingRow = renderTyping();
+    messagesEl.appendChild(typingRow);
+    scrollToBottom();
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ messages: history }),
+      });
+      const data = await res.json();
+
+      typingRow.remove();
+
+      if (!res.ok) {
+        history.push({ role: 'system', content: data.error || 'Something went wrong. Try again.' });
+      } else {
+        history.push({ role: 'assistant', content: data.reply || '…' });
+      }
+    } catch (err) {
+      typingRow.remove();
+      history.push({ role: 'system', content: 'Couldn’t reach the server. Check your connection and try again.' });
+    }
+
+    saveHistory();
+    render();
+    setBusy(false);
+    input.focus();
+  });
+
+  function renderTyping() {
+    const row = document.createElement('div');
+    row.className = 'entry entry-assistant';
+    row.innerHTML = '<span class="breathing"></span>';
+    return row;
+  }
+
+  function setBusy(busy) {
+    sendBtn.disabled = busy;
+    input.disabled = busy;
+  }
+</script>
+
+</body>
+</html>

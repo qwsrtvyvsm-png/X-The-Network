@@ -24,4 +24,5 @@ This repo contains the public-facing site for X — The Network.
 
 ```
 index.html    — Public-facing brand hub
+xhale/        — Xhale: a talk/vent AI companion venture (prototype, see xhale/README.md)
 ```
